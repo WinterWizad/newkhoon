@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from environ import Env
+
+env=Env()
+Env.read_env()
+ENVIRONMENT=env('ENVIRONMENT', default="production")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +25,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure--xowsc01w1_)2hm2gh$2t=7!o%g#zmhgi=(k)93x9qdxkxoj%3"
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+if ENVIRONMENT=="development":
+    DEBUG=True
+else:    
+    DEBUG = False
+
+ALLOWED_HOSTS = ['*','.vercel.app']
 
 
 # Application definition
@@ -48,6 +57,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+
 ]
 
 ROOT_URLCONF = "newproject.urls"
@@ -68,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "newproject.wsgi.application"
+WSGI_APPLICATION = "newproject.wsgi.app"
 
 
 # Database

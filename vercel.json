@@ -1,10 +1,5 @@
 {
-  "builds": [
-    {
-      "src": "manage.py",
-      "use": "@vercel/python"
-    }
-  ],
+  
   "routes": [
     {
       "src": "/static/(.*)",
