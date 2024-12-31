@@ -7,7 +7,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "manage.py"
+      "dest": "newproject/wsgi.py"
     }
   ]
  }
